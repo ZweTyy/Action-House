@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/ZweTyy/Action-House/src/proto;proto";
+
+service Auction {
+  rpc Bid    (BidRequest)  returns (BidReply);
+  rpc Result (Void)        returns (ResultReply);
+
+  rpc ReplicateUpdate (Update)  returns (Void);
+  rpc Election        (Void)    returns (Void);
+  rpc Leader          (Id)      returns (Void);
+}
+
+
+message BidRequest {
+  string bidder_id = 1;
+  uint32 amount    = 2;
+}
+
+message BidReply {
+  string status = 1;
+  string msg    = 2;
+}
+
+message ResultReply {
+  string status         = 1;
+  uint32 highest_bid    = 2;
+  string highest_bidder = 3;
+}
+
+message Update {
+  uint32 seq           = 1;
+  uint32 highest_bid   = 2;
+  string highest_bidder= 3;
+  bool   closed        = 4;
+}
+
+message Id {
+  uint32 id = 1;
+}
+
+message Void {}
+
